@@ -3,7 +3,9 @@
 // import Footer from './demoComponent/Footer';
 // import Home from './ex1/Home';
 
-import Home from "./classEx4/Home";
+import Home from "./React-hw2/Home";
+
+// import Home from "./classEx4/Home";
 
 // import Car from "./classEx2/Car";
 // import FilmList from "./classEx3/FilmList";
@@ -23,6 +25,7 @@ function App() {
       <Loop /> */}
       {/* <FilmList /> */}
       {/* <Grand /> */}
+      {/* <Home /> */}
       <Home />
     </div>
   );

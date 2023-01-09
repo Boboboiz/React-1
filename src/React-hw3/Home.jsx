@@ -26,7 +26,7 @@ export default class Home extends Component {
         "The adidas Primeknit upper wraps the foot with a supportive fit that enhances movement.\r\n\r\n",
       shortDescription:
         "The midsole contains 20% more Boost for an amplified Boost feeling.\r\n\r\n",
-      quantity: 990,
+      quantity: 10,
       image: "http://svcy3.myclass.vn/images/adidas-prophere-black-white.png",
     },
     {
@@ -148,7 +148,7 @@ export default class Home extends Component {
   ];
   state = {
     product: null,
-    cart: [], // mảng
+    cart: [],
   };
   setSelectedProduct = (val) => {
     this.setState({
@@ -157,16 +157,13 @@ export default class Home extends Component {
   };
   addToCart = (item) => {
     const cartItem = { product: item, quantity: 1 };
-    const cloneCart = [...this.state.cart]; //clone arr
-    // const cartItem - {product, quantity}
+    const cloneCart = [...this.state.cart];
     const foundItem = cloneCart.find((cartItem) => {
       return cartItem.product.id === item.id;
     });
     if (foundItem) {
-      // tăng số lượng
       foundItem.quantity += 1;
     } else {
-      // thêm cartItem mới vào cart
       cloneCart.push(cartItem);
     }
     this.setState(
@@ -177,85 +174,59 @@ export default class Home extends Component {
         console.log(this.state.cart);
       }
     );
-  }; // state là mảng hay object muốn sử dụng thì clone 1 object/arr r làm sau đó gán lại
-  deleteItem = (id) => {
+  };
+  deleteCart = (id) => {
     const cloneCart = [...this.state.cart];
-    const indexItem = cloneCart.findIndex((cartItem) => {
-      return cartItem.product.id === id;
+    const indexItem = cloneCart.findIndex((item) => {
+      return item.product.id === id;
     });
     if (indexItem === -1) return;
     cloneCart.splice(indexItem, 1);
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
+    this.setState({
+      cart: cloneCart,
+    });
   };
-  // deleteItem2() {
-  //   const taskIndex = this.state.cart.children[0].innerText;
-  //   arr.splice(arr.indexOf(taskIndex), 1);
-  //   this.setState(
-  //     {
-  //       cart: arr,
-  //     },
-  //     () => {
-  //       console.log(this.state.cart);
-  //     }
-  //   );
-  // }
-  // increase quant
-  increaseQuant = (id) => {
+  increasQuant = (id) => {
     const cloneCart = [...this.state.cart];
-    const item = cloneCart.find((cartItem) => {
-      return cartItem.product.id === id;
+    const item = cloneCart.find((item) => {
+      return item.product.id === id;
     });
     if (!item) return;
     if (item.product.quantity > item.quantity) {
       item.quantity += 1;
-    } 
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
+    } else {
+      return alert("Số lượng vượt quá giới hạn");
+    }
+    this.setState({
+      cart: cloneCart,
+    });
   };
   decreaseQuant = (id) => {
     const cloneCart = [...this.state.cart];
-    const item = cloneCart.find((cartItem) => {
-      return cartItem.product.id === id;
+    const item = cloneCart.find((item) => {
+      return item.product.id === id;
     });
     if (!item) return;
     if (item.quantity === 1) {
       const text = "Bạn có muốn xóa sản phẩm hem?";
-      if (window.confirm(text) === true) return this.deleteItem(id);
-    } else if (item.quantity > 0) {
+      if (window.confirm(text) === true) return this.deleteCart(id);
+    } else if (item.quantity > 1) {
       item.quantity -= 1;
     }
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
+    this.setState({
+      cart: cloneCart,
+    });
   };
   render() {
     return (
       <div className="container">
-        <h1 className="text-center">Shoe Shop</h1>
+        <h1 className="text-center">Shoe Shop:</h1>
         <button
           className="btn btn-success"
           data-bs-toggle="modal"
           data-bs-target="#cartModal"
         >
-          Giỏ hàng (0)
+          Giỏ hàng ({this.state.cart.length})
         </button>
         <ProductList
           product={this.product}
@@ -263,15 +234,14 @@ export default class Home extends Component {
           addToCart={this.addToCart}
         />
         {this.state.product && (
-          <ShowInfo setSelectedProduct={this.state.product} />
+          <ShowInfo selectedProduct={this.state.product} />
         )}
-
         {this.state.cart && (
           <Cart
+            decreaseQuant = {this.decreaseQuant}
+            increasQuant={this.increasQuant}
+            deleteCart={this.deleteCart}
             cart={this.state.cart}
-            deleteItem={this.deleteItem}
-            increaseQuant={this.increaseQuant}
-            decreaseQuant={this.decreaseQuant}
           />
         )}
       </div>

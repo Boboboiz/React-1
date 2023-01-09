@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import Cart from "./Cart";
-import ProductList from "./ProductList";
-import ShowInfo from "./ShowInfo";
+import { connect } from "react-redux";
 
-export default class Home extends Component {
+class DemoCart extends Component {
   product = [
     {
       id: 1,
@@ -146,135 +144,36 @@ export default class Home extends Component {
       image: "http://svcy3.myclass.vn/images/nike-air-max-270-react.png",
     },
   ];
-  state = {
-    product: null,
-    cart: [], // mảng
-  };
-  setSelectedProduct = (val) => {
-    this.setState({
-      product: val,
-    });
-  };
-  addToCart = (item) => {
-    const cartItem = { product: item, quantity: 1 };
-    const cloneCart = [...this.state.cart]; //clone arr
-    // const cartItem - {product, quantity}
-    const foundItem = cloneCart.find((cartItem) => {
-      return cartItem.product.id === item.id;
-    });
-    if (foundItem) {
-      // tăng số lượng
-      foundItem.quantity += 1;
-    } else {
-      // thêm cartItem mới vào cart
-      cloneCart.push(cartItem);
-    }
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
-  }; // state là mảng hay object muốn sử dụng thì clone 1 object/arr r làm sau đó gán lại
-  deleteItem = (id) => {
-    const cloneCart = [...this.state.cart];
-    const indexItem = cloneCart.findIndex((cartItem) => {
-      return cartItem.product.id === id;
-    });
-    if (indexItem === -1) return;
-    cloneCart.splice(indexItem, 1);
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
-  };
-  // deleteItem2() {
-  //   const taskIndex = this.state.cart.children[0].innerText;
-  //   arr.splice(arr.indexOf(taskIndex), 1);
-  //   this.setState(
-  //     {
-  //       cart: arr,
-  //     },
-  //     () => {
-  //       console.log(this.state.cart);
-  //     }
-  //   );
-  // }
-  // increase quant
-  increaseQuant = (id) => {
-    const cloneCart = [...this.state.cart];
-    const item = cloneCart.find((cartItem) => {
-      return cartItem.product.id === id;
-    });
-    if (!item) return;
-    if (item.product.quantity > item.quantity) {
-      item.quantity += 1;
-    } 
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
-  };
-  decreaseQuant = (id) => {
-    const cloneCart = [...this.state.cart];
-    const item = cloneCart.find((cartItem) => {
-      return cartItem.product.id === id;
-    });
-    if (!item) return;
-    if (item.quantity === 1) {
-      const text = "Bạn có muốn xóa sản phẩm hem?";
-      if (window.confirm(text) === true) return this.deleteItem(id);
-    } else if (item.quantity > 0) {
-      item.quantity -= 1;
-    }
-    this.setState(
-      {
-        cart: cloneCart,
-      },
-      () => {
-        console.log(this.state.cart);
-      }
-    );
-  };
-  render() {
-    return (
-      <div className="container">
-        <h1 className="text-center">Shoe Shop</h1>
-        <button
-          className="btn btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#cartModal"
-        >
-          Giỏ hàng (0)
-        </button>
-        <ProductList
-          product={this.product}
-          setSelectedProduct={this.setSelectedProduct}
-          addToCart={this.addToCart}
-        />
-        {this.state.product && (
-          <ShowInfo setSelectedProduct={this.state.product} />
-        )}
 
-        {this.state.cart && (
-          <Cart
-            cart={this.state.cart}
-            deleteItem={this.deleteItem}
-            increaseQuant={this.increaseQuant}
-            decreaseQuant={this.decreaseQuant}
-          />
-        )}
+  render() {
+    const {cart, dispatch} = this.props
+    return (
+      <div className="row pt-5">
+        <h1 className="text-center">{cart.length}</h1>
+        {this.product.map((item) => {
+          return (
+            <div className="col-4">
+              <img src={item.image} className="img-fluid" />
+              <br />
+              {item.name}
+              <br />
+              <button onClick={()=> dispatch ({
+                type:"THEM_GIO_HANG",
+                payload: item
+              })} className="btn btn-success">Thêm</button>
+            </div>
+          );
+        })}
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {console.log(state)
+  return {
+    demoRedux: state.demoReducer,
+    cart: state.cartReducer.cart
+  };
+};
+
+export default connect(mapStateToProps, null)(DemoCart);

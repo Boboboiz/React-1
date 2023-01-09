@@ -3,7 +3,15 @@
 // import Footer from './demoComponent/Footer';
 // import Home from './ex1/Home';
 
-import Home from "./React-hw2/Home";
+import Home from "./React-hw3/Home";
+
+// import DemoCart from "./demoRedux/DemoCart";
+
+// import DemoRedux from "./demoRedux/DemoRedux";
+
+// import Home from "./classEx4/Home";
+
+// import Home from "./React-hw2/Home";
 
 // import Home from "./classEx4/Home";
 
@@ -26,6 +34,10 @@ function App() {
       {/* <FilmList /> */}
       {/* <Grand /> */}
       {/* <Home /> */}
+      {/* <Home /> */}
+      {/* <Home /> */}
+      {/* <DemoRedux /> */}
+      {/* <DemoCart /> */}
       <Home />
     </div>
   );

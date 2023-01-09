@@ -18,7 +18,9 @@ export default class ProductItem extends Component {
             {" "}
             Chi tiết
           </button>
-          <button className="btn btn-info">Thêm</button>
+          <button onClick={()=> {
+            this.props.addToCart(this.props.item)
+          }} className="btn btn-info">Thêm</button>
         </div>
       </div>
     );

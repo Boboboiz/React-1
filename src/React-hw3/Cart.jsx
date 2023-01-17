@@ -1,36 +1,60 @@
 import React, { Component } from "react";
 
 export default class Cart extends Component {
-  renderCart = ()=> {
-    console.log(this.props.cart)
-    return this.props.cart.map(item=> {
-      return (
-        <tr key={item.product.id} >
-        <td>1</td>
-        <td>
-          <img src={item.product.image} alt=""  className="img-fluid" style={{width:'125px'}}/>
-        </td>
-        <td className="fw-semibold">{item.product.name}</td>
-        <td>
-          <button onClick={()=> {
-            this.props.decreaseQuant(item.product.id)
-          }} className="btn btn-info me-2">-</button>
-          {item.quantity}
-          <button onClick={()=> {
-            this.props.increasQuant(item.product.id)
-          }} className="btn btn-info ms-2">+</button>
-        </td>
-        <td>{item.product.price}</td>
-        <td>1000</td>
-        <td>
-          <button onClick={()=>{
-            this.props.deleteCart(item.product.id)
-          }} className="btn btn-danger">Xóa</button>
-        </td>
-      </tr>
-      )
-    })
+  totalPrice() {
+    return this.props.cart.reduce((preValue, currentItem) => {
+      return preValue + currentItem.product.price * currentItem.quantity;
+    }, 0);
   }
+  renderCart = () => {
+    return this.props.cart.map((item) => {
+      return (
+        <tr key={item.product.id}>
+          <td>1</td>
+          <td>
+            <img
+              src={item.product.image}
+              alt=""
+              className="img-fluid"
+              style={{ width: "125px" }}
+            />
+          </td>
+          <td className="fw-semibold">{item.product.name}</td>
+          <td>
+            <button
+              onClick={() => {
+                this.props.decreaseQuant(item.product.id);
+              }}
+              className="btn btn-info me-2"
+            >
+              -
+            </button>
+            {item.quantity}
+            <button
+              onClick={() => {
+                this.props.increasQuant(item.product.id);
+              }}
+              className="btn btn-info ms-2"
+            >
+              +
+            </button>
+          </td>
+          <td>{item.product.price}</td>
+          <td>{item.product.price * item.quantity}</td>
+          <td>
+            <button
+              onClick={() => {
+                this.props.deleteCart(item.product.id);
+              }}
+              className="btn btn-danger"
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  };
   render() {
     return (
       <div>
@@ -45,7 +69,7 @@ export default class Cart extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
-                 Giỏ hàng
+                  Giỏ hàng
                 </h1>
                 <button
                   type="button"
@@ -67,13 +91,17 @@ export default class Cart extends Component {
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {this.renderCart()}
-                  </tbody>
+                  <tbody>{this.renderCart()}</tbody>
                 </table>
+                <h2>Tổng tiền:{this.totalPrice()} </h2>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-primary">
+                <button
+                  onClick={this.props.paymentCart}
+                  type="button"
+                  className="btn btn-primary"
+                  data-bs-dismiss= "modal"
+                >
                   Thanh toán
                 </button>
                 <button

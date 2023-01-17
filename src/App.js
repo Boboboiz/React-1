@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import Home from "./classEx6/Home";
+import Home from "./classEx5/Ex5/Home";
+// import Home from "./React-hw3/Home";
+
 // import Demo1 from "./demoLifeCycle/Demo1";
 
 class App extends Component {
@@ -18,6 +20,8 @@ class App extends Component {
         {/* <Demo1 item={this.state.count2}/>
         <h1> Count2:{this.state.count2}</h1>
         <button onClick={this.increaseCount2}>Count2</button> */}
+        {/* <Home /> */}
+        {/* <Home /> */}
         <Home />
       </div>
     );

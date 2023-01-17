@@ -217,6 +217,13 @@ export default class Home extends Component {
       cart: cloneCart,
     });
   };
+  paymentCart = ()=> {
+    const cloneCart = []
+    this.setState({
+      cart: cloneCart
+    })
+    return alert ('Thanh toán thành công')
+  }
   render() {
     return (
       <div className="container">
@@ -242,6 +249,7 @@ export default class Home extends Component {
             increasQuant={this.increasQuant}
             deleteCart={this.deleteCart}
             cart={this.state.cart}
+            paymentCart={this.paymentCart}
           />
         )}
       </div>

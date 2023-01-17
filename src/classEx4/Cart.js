@@ -51,7 +51,7 @@ export default class Cart extends Component {
   totalPrice() {
     return this.props.cart.reduce((preValue, currentItem) => {
       return (
-        preValue + currentItem.product.price * currentItem.product.quantity
+        preValue + currentItem.product.price * currentItem.quantity
       );
     }, 0);
   };

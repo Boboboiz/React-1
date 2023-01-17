@@ -1,46 +1,26 @@
+import React, { Component } from "react";
+import Home from "./classEx6/Home";
+// import Demo1 from "./demoLifeCycle/Demo1";
 
-// import Header from './demoComponent/Header';
-// import Footer from './demoComponent/Footer';
-// import Home from './ex1/Home';
-
-import Home from "./React-hw3/Home";
-
-// import DemoCart from "./demoRedux/DemoCart";
-
-// import DemoRedux from "./demoRedux/DemoRedux";
-
-// import Home from "./classEx4/Home";
-
-// import Home from "./React-hw2/Home";
-
-// import Home from "./classEx4/Home";
-
-// import Car from "./classEx2/Car";
-// import FilmList from "./classEx3/FilmList";
-// import Databinding from "./demoDatabinding/Databinding";
-// import Loop from "./demoDatabinding/Loop";
-// import State from "./demoDatabinding/State";
-// import Grand from "./demoProps/Grand";
-
-// import Landingpage from './React-hw1/Landingpage'
-function App() {
-  return (
-    <div className="App">
-      {/**Gọi component Header hiển thị */}
-      {/* <Databinding />
-      <State />
-      <Car />
-      <Loop /> */}
-      {/* <FilmList /> */}
-      {/* <Grand /> */}
-      {/* <Home /> */}
-      {/* <Home /> */}
-      {/* <Home /> */}
-      {/* <DemoRedux /> */}
-      {/* <DemoCart /> */}
-      <Home />
-    </div>
-  );
+class App extends Component {
+  // state = {
+  //   count2: 0,
+  //   countApp_2: 10,
+  // };
+  // increaseCount2 = () => {
+  //   this.setState({
+  //     count2: this.state.count2 + 1,
+  //   });
+  // };
+  render() {
+    return (
+      <div className="App p-5">
+        {/* <Demo1 item={this.state.count2}/>
+        <h1> Count2:{this.state.count2}</h1>
+        <button onClick={this.increaseCount2}>Count2</button> */}
+        <Home />
+      </div>
+    );
+  }
 }
-
 export default App;

@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import "./Model.css";
-import { connect } from "react-redux";
-
-
-
 
 class Model extends Component {
-  
   render() {
     return (
       <div
         className="contain"
+        style={{
+          backgroundImage: `url(${model.background})`,
+        }}
       >
         <div
           className="body"
@@ -50,19 +48,9 @@ class Model extends Component {
             backgroundImage: "url(images/allbody/feet_high_rightnew.png)",
           }}
         />
-        {/* Áo */}
-        <div className="bikinitop" style={{
-          backgroundImage:`url(${this.props.selectedProduct.topclothes})`,
-          backgroundSize:"cover"
-        }}></div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    selectedProduct: state.productReducer.selectedProduct,
-  }
-}
-export default connect(mapStateToProps)(Model);
+export default Model;

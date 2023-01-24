@@ -1,30 +1,14 @@
-import React, { Component } from "react";
-import Home from "./classEx5/Ex5/Home";
-// import Home from "./React-hw3/Home";
+// import Home from "./classEx5/Ex5/Home"
 
-// import Demo1 from "./demoLifeCycle/Demo1";
+import Home from "./classEx6/Home"
 
-class App extends Component {
-  // state = {
-  //   count2: 0,
-  //   countApp_2: 10,
-  // };
-  // increaseCount2 = () => {
-  //   this.setState({
-  //     count2: this.state.count2 + 1,
-  //   });
-  // };
-  render() {
-    return (
-      <div className="App p-5">
-        {/* <Demo1 item={this.state.count2}/>
-        <h1> Count2:{this.state.count2}</h1>
-        <button onClick={this.increaseCount2}>Count2</button> */}
-        {/* <Home /> */}
-        {/* <Home /> */}
-        <Home />
-      </div>
-    );
-  }
+function App(){
+  return (
+    <div className="App">
+      {/* <Home /> */}
+      <Home />
+    </div>
+  )
 }
-export default App;
+
+export default App

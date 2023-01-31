@@ -26,7 +26,7 @@ class ListSeat extends Component {
                 <tr className="text-light fw-bold fs-5">
                   <th> Số Ghế</th>
                   <th> Giá</th>
-                  <th> </th>
+                  <th>Action </th>
                 </tr>
               </thead>
               <tbody >
@@ -45,11 +45,16 @@ class ListSeat extends Component {
                 })}
                 <tr>
                   <td className="text-light fw-bold fs-5">Tổng tiền :</td>
-                  <td className="text-warning fw-bold fs-5" colSpan={2}>{this.props.choosingSeat.reduce((total,choosingSeat ,index)=> {
+                  <td className="text-warning fw-bold fs-5">{this.props.choosingSeat.reduce((total,choosingSeat ,index)=> {
                     return (
                       total += choosingSeat.gia
                     )
                   },0).toLocaleString()}</td>
+                  <td>
+                    <button onClick={()=> {
+                      return alert ('đặt vé thành công')
+                    }} className="btn btn-success">Đặt vé</button>
+                  </td>
                 </tr>
               </tbody>
             </table>

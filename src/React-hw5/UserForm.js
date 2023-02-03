@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
+import {
+  actionCreateUser,
+  actionUpdateUser,
+} from "../redux/actions/userAction";
 
 class UserForm extends Component {
   state = {
@@ -72,22 +75,11 @@ class UserForm extends Component {
     const { id, ...payload } = values;
     try {
       if (id) {
-        // Call API cập nhật user
-        await axios({
-          method: "PUT",
-          url: `https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/Users/${id}`,
-          data: payload,
-        });
+        this.props.dispatch(actionUpdateUser(id, payload));
       } else {
-        // Call API thêm user
-        await axios({
-          method: "POST",
-          url: "https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/Users",
-          data: payload,
-        });
+        this.props.dispatch(actionCreateUser(payload));
       }
-      // Sau khi call API thêm/cập nhật user thành công, ta cần gọi lại API get users để giao diện cập nhật thông qua prop onSubmitSuccess
-      this.props.onSubmitSuccess();
+
       // Xoá giá trị của các input
       this.setState({
         values: {
@@ -239,7 +231,6 @@ class UserForm extends Component {
     );
   }
 
-  // Khi props hoặc state thay đổi, component sẽ re-render và chạy vào lifecycle componentDidUpdate
   componentDidUpdate(prevProps) {
     // Kiểm tra nếu prop user bị thay đổi, dùng giá trị của prop đó để set lại cho state values
     if (this.props.user && this.props.user !== prevProps.user) {
@@ -252,7 +243,7 @@ class UserForm extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user.selectedUser,
+    user: state.userReducer.selectedUser,
   };
 };
 

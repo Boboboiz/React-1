@@ -1,35 +1,56 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
+import {
+  actionDeleteUser,
+  actionSelectUser,
+} from "../redux/actions/userAction";
 
 class UserList extends Component {
-  handleDelete = async (userId) => {
-    try {
-      await axios({
-        method: "DELETE",
-        url: `https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/Users/${userId}`,
-      });
-
-      this.props.onDeleteSuccess();
-    } catch (error) {
-      console.log(error);
-    }
+  handleDelete = (userId) => {
+    this.props.dispatch(actionDeleteUser(userId));
   };
 
   handleSelect = async (userId) => {
-    try {
-      const res = await axios({
-        method: "GET",
-        url: `https://5bd2959ac8f9e400130cb7e9.mockapi.io/api/Users/${userId}`,
-      });
+    this.props.dispatch(actionSelectUser(userId));
+  };
 
-      this.props.dispatch({
-        type: "user/UPDATE_SELECTED_USER",
-        payload: res.data,
-      });
-    } catch (error) {
-      console.log(error);
+  renderTable = () => {
+    const { users, isLoading, error } = this.props;
+
+    if (isLoading) {
+      // return <Loading />
+      return <h1>Loading...</h1>;
     }
+
+    if (error) {
+      return <h1>{error}</h1>;
+    }
+
+    return users.map((item, index) => {
+      return (
+        <tr>
+          <td>{index + 1}</td>
+          <td>{item.fullName}</td>
+          <td>{item.username}</td>
+          <td>{item.phone}</td>
+          <td>{item.email}</td>
+          <td>
+            <button
+              className="btn btn-primary me-2"
+              onClick={() => this.handleSelect(item.id)}
+            >
+              Chỉnh sửa
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => this.handleDelete(item.id)}
+            >
+              Xoá
+            </button>
+          </td>
+        </tr>
+      );
+    });
   };
 
   render() {
@@ -50,33 +71,7 @@ class UserList extends Component {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              {this.props.users.map((item, index) => {
-                return (
-                  <tr>
-                    <td>{index + 1}</td>
-                    <td>{item.fullName}</td>
-                    <td>{item.username}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.email}</td>
-                    <td>
-                      <button
-                        className="btn btn-primary me-2"
-                        onClick={() => this.handleSelect(item.id)}
-                      >
-                        Chỉnh sửa
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => this.handleDelete(item.id)}
-                      >
-                        Xoá
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            <tbody>{this.renderTable()}</tbody>
           </table>
         </div>
       </div>
@@ -86,7 +81,9 @@ class UserList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.user.users,
+    users: state.userReducer.users,
+    isLoading: state.userReducer.isLoading,
+    error: state.userReducer.error,
   };
 };
 export default connect(mapStateToProps)(UserList);

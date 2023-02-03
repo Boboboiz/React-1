@@ -1,24 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "../constants/userConstants";
 
-// export const actionUpdateUserList = (userList) => {
-//   return {
-//     type: actionTypes.UPDATE_USER_LIST,
-//     payload: userList,
-//   };
-// };
 
-// export const actionUpdateSelectedUser = (user) => {
-//   return {
-//     type: actionTypes.UPDATE_SELECTED_USER,
-//     payload: user,
-//   };
-// };
-
-// ======================================================
-// Mặc định redux chỉ cho phép action là một plain object
-// Để có thể tạo các async action ta sử dụng một middleware của redux là redux-thunk
-// Redux thunk cho phép các action là một function thay vì một plain object
 export const actionFetchUsers = () => {
   // thunk function nhận được 2 tham số dispatch và getState
   // dispatch: Dùng để dispatch 1 action khác để đưa vào store

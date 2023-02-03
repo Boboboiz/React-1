@@ -3,6 +3,7 @@ import UserForm from "./UserForm";
 import UserList from "./UserList";
 import axios from "axios";
 import { connect } from "react-redux";
+import SearchUser from "./SearchUser";
 
 class Home extends Component {
   // constructor(){}
@@ -25,6 +26,7 @@ class Home extends Component {
       <div>
         <h1>Quản lý Người dùng</h1>
         <UserForm onSubmitSuccess={this.fetchUsers} />
+        <SearchUser />
         <UserList onDeleteSuccess={this.fetchUsers} />
       </div>
     );

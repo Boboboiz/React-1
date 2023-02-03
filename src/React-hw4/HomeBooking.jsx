@@ -34,7 +34,7 @@ class HomeBooking extends Component {
           <div className="row">
             <div className="col-8 text-center">
               <div className="text-warning fw-bold fs-3 ">
-                ĐẶT VÉ XEM FILM CYBERSOFT
+                ĐẶT VÉ XEM FILM DEMO
               </div>
               <div className="text-light mb-2 fw-bold fs-5">Màn Hình</div>
               <div

@@ -1,31 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import useRequest from "../demoCustomHooks/useRequest";
 
 function DemoHooks() {
-  const [todos, setTodos] = useState([]);
+  // const [todos, setTodos] = useState([]);
   const [userId, setUserId] = useState("");
 
-  const fetchTodos = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos",
-        {
-          params: {
-            userId: userId || undefined,
-          },
-        }
-      );
-      // Call API thành công
-      setTodos(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchTodos = async () => {
+  //   try {
+  //     const { data } = await axios.get(
+  //       "https://jsonplaceholder.typicode.com/todos",
+  //       {
+  //         params: {
+  //           userId: userId || undefined,
+  //         },
+  //       }
+  //     );
+  //     // Call API thành công
+  //     setTodos(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchTodos();
-  }, [userId]);
-
+  // useEffect(() => {
+  //   fetchTodos();
+  // }, [userId]);
+ const {data : todo = []} = useRequest( async () => {
+    const { data } = await axios.get(
+            "https://jsonplaceholder.typicode.com/todos",
+            {
+              params: {
+                userId: userId || undefined,
+              },
+            }
+          );
+          return data
+  }, [userId])
   return (
     <div className="container">
       <h1>Todos</h1>
@@ -38,7 +49,7 @@ function DemoHooks() {
         <option value="4">User 4</option>
       </select>
 
-      {todos.map((todo) => {
+      {todo.map((todo) => {
         return <p key={todo.id}>- {todo.title}</p>;
       })}
     </div>

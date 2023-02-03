@@ -278,7 +278,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case "product/UPDATE_SELECTED_PRODUCT": {
         console.log('payload :>> ', payload);
       const updatedSelectedProduct = { ...state.selectedProduct };
-      updatedSelectedProduct[payload.type] = payload.image; //dynamic key
+      updatedSelectedProduct[payload.type] = payload.img; //dynamic key
 
       return { ...state, selectedProduct: updatedSelectedProduct };// selectedProduct trùng key nên biến updatedSelectedProduct đè lên cái cũ
     }
